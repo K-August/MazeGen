@@ -16,7 +16,9 @@ public class Main extends JFrame implements Runnable {
     JButton exit = new JButton("Quit");
 
     public Main() {
+        // region Window Settings
         super("Maze Gen Thing");
+        
         running = false;
 
         setBounds(0, 0, WIDTH, HEIGHT);
@@ -26,7 +28,9 @@ public class Main extends JFrame implements Runnable {
         setLayout(null);
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+        //endregion
+        
+        // region Start Button
         start.setSize(200, 50);
         start.setLocation(WIDTH / 2 - 100, HEIGHT - 200);
         start.setBackground(Color.BLACK);
@@ -38,19 +42,24 @@ public class Main extends JFrame implements Runnable {
                 System.out.println("yo! you clicked me!");
             }
         });
-
+        //endregion
+        
+        // region Quit Button
         exit.setSize(150, 50);
         exit.setLocation(WIDTH / 2 - 75, HEIGHT - 125);
         exit.setBackground(Color.BLACK);
-        exit.setForeground(Color.WHITE);
+        exit.setForeground(Color.RED);
         add(exit);
         exit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                
                 System.out.println("you trynna leave?!");
+                System.exit(0);
             }
         });
-
+        // endregion
+        
         setVisible(true);
         this.start();
     }
