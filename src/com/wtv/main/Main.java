@@ -12,6 +12,9 @@ public class Main extends JFrame implements Runnable {
     private Thread thread;
     private boolean running;
 
+
+    JPanel maze = new MazePanel();
+
     JButton start = new JButton("Begin");
     JButton exit = new JButton("Quit");
 
@@ -59,7 +62,13 @@ public class Main extends JFrame implements Runnable {
             }
         });
         // endregion
-        
+
+        //region Maze Panel
+
+        add(maze);
+
+        // endregion
+
         setVisible(true);
         this.start();
     }
