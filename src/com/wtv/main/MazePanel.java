@@ -10,7 +10,7 @@ public class MazePanel extends JPanel {
 
     public MazePanel() {
         setSize(WIDTH, HEIGHT);
-        setLocation((Main.WIDTH / 2)  - (this.WIDTH / 2), 50);
+        setLocation((Main.WIDTH / 2)  - (this.WIDTH / 2), 30);
 
         setLayout(null);
         setBorder(BorderFactory.createEtchedBorder());
