@@ -17,6 +17,7 @@ public class Main extends JFrame implements Runnable {
 
     JButton start = new JButton("Begin");
     JButton exit = new JButton("Quit");
+    JButton settings = new JButton("Settings");
 
     public Main() {
         // region Window Settings
@@ -27,6 +28,7 @@ public class Main extends JFrame implements Runnable {
         setBounds(0, 0, WIDTH, HEIGHT);
         setResizable(false);
         setLocationRelativeTo(null);
+        setResizable(false);
 
         setLayout(null);
 
@@ -59,6 +61,20 @@ public class Main extends JFrame implements Runnable {
                 
                 System.out.println("you trynna leave?!");
                 System.exit(0);
+            }
+        });
+        // endregion
+
+        // region Settings Button
+        settings.setSize(50, 150);
+        settings.setLocation(WIDTH / 2 - 200, HEIGHT - 200);
+        settings.setBackground(Color.BLACK);
+        settings.setForeground(Color.WHITE);
+        add(settings);
+        settings.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new SettingsFrame();
             }
         });
         // endregion
