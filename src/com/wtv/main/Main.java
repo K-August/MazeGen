@@ -1,5 +1,6 @@
 package com.wtv.main;
 
+import javax.management.InstanceNotFoundException;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -9,18 +10,20 @@ import java.awt.image.BufferStrategy;
 public class Main extends JFrame implements Runnable {
     public static final int WIDTH = 600, HEIGHT = 800;
 
+    public static Main ins;
+    
     private Thread thread;
     private boolean running;
-
-
+    
     JPanel maze = new MazePanel();
 
     JButton start = new JButton("Begin");
     JButton exit = new JButton("Quit");
+    JButton settings = new JButton("Color Settings");
 
     public Main() {
         // region Window Settings
-        super("Maze Gen Thing");
+        super("Maze Generator v0.1");
         
         running = false;
 
@@ -34,10 +37,10 @@ public class Main extends JFrame implements Runnable {
         //endregion
         
         // region Start Button
-        start.setSize(200, 50);
-        start.setLocation(WIDTH / 2 - 100, HEIGHT - 200);
-        start.setBackground(Color.BLACK);
-        start.setForeground(Color.WHITE);
+        start.setSize(150, 100);
+        start.setLocation(WIDTH / 2 - 25, HEIGHT - 175);
+        start.setBackground(Color.GREEN);
+        start.setForeground(Color.BLACK);
         add(start);
         start.addActionListener(new ActionListener() {
             @Override
@@ -49,9 +52,9 @@ public class Main extends JFrame implements Runnable {
         
         // region Quit Button
         exit.setSize(150, 50);
-        exit.setLocation(WIDTH / 2 - 75, HEIGHT - 125);
-        exit.setBackground(Color.BLACK);
-        exit.setForeground(Color.RED);
+        exit.setLocation(WIDTH / 3 - 75, HEIGHT - 125);
+        exit.setBackground(Color.RED);
+        exit.setForeground(Color.BLACK);
         add(exit);
         exit.addActionListener(new ActionListener() {
             @Override
@@ -63,6 +66,20 @@ public class Main extends JFrame implements Runnable {
         });
         // endregion
 
+        // region Settings Button
+        settings.setSize(150, 50);
+        settings.setLocation(WIDTH / 3 - 75, HEIGHT - 175);
+        settings.setBackground(Color.BLACK);
+        settings.setForeground(Color.WHITE);
+        add(settings);
+        settings.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new Settings();
+            }
+        });
+        // endregion
+        
         //region Maze Panel
 
         add(maze);
@@ -102,8 +119,7 @@ public class Main extends JFrame implements Runnable {
         }
         stop();
     }
-
     public static void main(String[] args) {
-        new Main();
+        ins = new Main();
     }
 }
