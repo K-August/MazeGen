@@ -1,21 +1,16 @@
 package com.wtv.main;
 
 import java.awt.*;
+import java.awt.image.BufferStrategy;
 
 public class Cell {
-
-    public Point pos;
-
-    public int w;
-
     public boolean visited;
     public boolean[] walls = {true, true, true, true};
 
-    public Cell(Point pos, int width) {
-        this.w = width;
+    public int x, y;
 
-        this.visited = false;
-        this.pos = pos;
+    public Cell(int row, int col, int w) {
+        x = col * w;
+        y = (row * w) + 30;
     }
-
 }

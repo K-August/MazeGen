@@ -1,21 +1,20 @@
 package com.wtv.main;
 
-import javax.management.InstanceNotFoundException;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferStrategy;
 
 public class Main extends JFrame implements Runnable {
     public static final int WIDTH = 600, HEIGHT = 800;
 
     public static Main ins;
-    
+
     private Thread thread;
     private boolean running;
-    
-    JPanel maze = new MazePanel();
 
     JButton start = new JButton("Begin");
     JButton exit = new JButton("Quit");
@@ -45,7 +44,8 @@ public class Main extends JFrame implements Runnable {
         start.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("yo! you clicked me!");
+                new Maze();
+                setVisible(false);
             }
         });
         //endregion
@@ -76,14 +76,9 @@ public class Main extends JFrame implements Runnable {
             @Override
             public void actionPerformed(ActionEvent e) {
                 new Settings();
+                setVisible(false);
             }
         });
-        // endregion
-        
-        //region Maze Panel
-
-        add(maze);
-
         // endregion
 
         setVisible(true);

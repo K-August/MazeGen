@@ -4,6 +4,8 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class Settings extends JFrame
 {
@@ -52,7 +54,15 @@ public class Settings extends JFrame
             }
         });
         // endregion
-        
+
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                super.windowClosing(e);
+                new Main();
+            }
+        });
+
         setVisible(true);
     }
 }
