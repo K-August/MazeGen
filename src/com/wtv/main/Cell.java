@@ -10,7 +10,8 @@ public class Cell {
 
     public int x, y, row, col;
 
-    // i = rows j = columns
+    private int totalRows = Maze.getRows();
+    private int totalCols = Maze.getCols();
 
     public Cell(int row, int col, int w) {
         this.row = row;
@@ -19,10 +20,9 @@ public class Cell {
         y = (row * w) + 30;
     }
 
-    public static int index(int i, int j, int cols) {
-        if(i < 0 || i > cols - 1 || j < 0 || j > cols - 1)
-            return 0;
-        else
-            return i + j * cols;
+    public void checkMoves() {
+        if(row - 1 < 0 || row + 1 > Maze.rows) {
+
+        }
     }
 }

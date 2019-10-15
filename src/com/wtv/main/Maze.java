@@ -18,6 +18,7 @@ public class Maze extends JFrame implements Runnable {
     public int w = WIDTH / 10;
     public int rows = HEIGHT / w, cols = WIDTH / w;
 
+    public boolean canMoveUp = true, canMoveRight = true, canMoveDown = true, canMoveLeft = true;
 
     public Cell current;
 
@@ -39,14 +40,6 @@ public class Maze extends JFrame implements Runnable {
         }
 
         current = grid[0][0];
-
-        this.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                super.windowClosing(e);
-                new Main();
-            }
-        });
 
         setVisible(true);
         this.start();
@@ -92,6 +85,7 @@ public class Maze extends JFrame implements Runnable {
 
         //TODO canMoveUp, down, left, right to check neighbors
 
+        // region Maze Generation Algorithm
         for(int i = 0; i < rows; i++){
             for(int j = 0; j < cols; j++) {
                 if(grid[i][j].visited) {
@@ -115,6 +109,9 @@ public class Maze extends JFrame implements Runnable {
 
         g.dispose();
         bs.show();
+        //endregion
     }
 
+    public int getRows() { return cols; }
+    public int getCols() { return rows; }
 }
