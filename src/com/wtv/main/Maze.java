@@ -15,8 +15,8 @@ public class Maze extends JFrame implements Runnable {
     private boolean running = false;
     private Thread thread;
 
-    public int w = WIDTH / 10;
-    public int rows = HEIGHT / w, cols = WIDTH / w;
+    public static int w = WIDTH / 10;
+    public static int rows = HEIGHT / w, cols = WIDTH / w;
 
     public boolean canMoveUp = true, canMoveRight = true, canMoveDown = true, canMoveLeft = true;
 
@@ -112,6 +112,6 @@ public class Maze extends JFrame implements Runnable {
         //endregion
     }
 
-    public int getRows() { return cols; }
-    public int getCols() { return rows; }
+    public static int getRows() { return cols; }
+    public static int getCols() { return rows; }
 }

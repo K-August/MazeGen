@@ -21,7 +21,7 @@ public class Cell {
     }
 
     public void checkMoves() {
-        if(row - 1 < 0 || row + 1 > Maze.rows) {
+        if(row - 1 < 0 || row + 1 > totalRows) {
 
         }
     }
