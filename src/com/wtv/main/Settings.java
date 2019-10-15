@@ -11,7 +11,7 @@ public class Settings extends JFrame
 {
     private Color first, second; 
     
-    JColorChooser a = new JColorChooser();
+    public static JColorChooser a = new JColorChooser();
     JColorChooser b = new JColorChooser();
     
     public Settings()
