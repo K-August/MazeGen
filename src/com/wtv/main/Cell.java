@@ -10,7 +10,7 @@ public class Cell {
 
     public int x, y, row, col;
 
-    // i = col j = rows
+    // i = rows j = columns
 
     public Cell(int row, int col, int w) {
         this.row = row;
@@ -21,7 +21,8 @@ public class Cell {
 
     public static int index(int i, int j, int cols) {
         if(i < 0 || i > cols - 1 || j < 0 || j > cols - 1)
-            return -1;
-        return i + j * cols;
+            return 0;
+        else
+            return i + j * cols;
     }
 }

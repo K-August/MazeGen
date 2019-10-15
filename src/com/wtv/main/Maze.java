@@ -22,7 +22,7 @@ public class Maze extends JFrame implements Runnable {
     public Cell current;
 
     public Stack<Cell> visited = new Stack<Cell>();
-    public ArrayList<Cell> cells = new ArrayList<Cell>();
+    public Cell[][] grid = new Cell[rows][cols];
 
     public Maze() {
         super("maze");
@@ -35,12 +35,10 @@ public class Maze extends JFrame implements Runnable {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         for(int i = 0; i < rows; i++) {
-            for(int j = 0; j < cols; j++) {
-                cells.add(new Cell(i, j, w));
-            }
+            for(int j = 0; j < cols; j++) grid[i][j] = new Cell(j, i, w);
         }
 
-        current = cells.get(0);
+        current = grid[0][0];
 
         this.addWindowListener(new WindowAdapter() {
             @Override
@@ -69,33 +67,14 @@ public class Maze extends JFrame implements Runnable {
     private void tick() { }
 
     public void run() {
+        long past = System.currentTimeMillis();
         while(running) {
+            long now = System.currentTimeMillis();
             tick();
-            render();
+            if(now - past > 100)
+                render();
         }
         stop();
-    }
-
-    //j = row i = col
-
-    public Cell checkNeighbors(Cell curr) {
-        ArrayList<Cell> neighbors = new ArrayList<Cell>();
-
-        Cell top = (Cell.index(curr.col, curr.row - 1, cols) > -1) ? cells.get(Cell.index(curr.col, curr.row - 1, cols)) : null;
-        Cell right = (Cell.index(curr.col + 1, curr.row, cols) > -1) ? cells.get(Cell.index(curr.col + 1, curr.row, cols)) : null;
-        Cell bottom = (Cell.index(curr.col, curr.row + 1, cols) > -1) ? cells.get(Cell.index(curr.col, curr.row + 1, cols)) : null;
-        Cell left = (Cell.index(curr.col - 1, curr.row, cols) > -1) ? cells.get((curr.col + curr.row - 1) * cols) : null;
-
-        if(top != null && !top.visited) { neighbors.add(top); }
-        if(right != null && !right.visited) { neighbors.add(right); }
-        if(bottom != null && !bottom.visited) { neighbors.add(bottom); }
-        if(left != null && !left.visited) { neighbors.add(left); }
-
-        if(neighbors.size() > 0) {
-            Random r = new Random();
-            return neighbors.get(r.nextInt(neighbors.size()));
-        }
-        return null;
     }
 
     public void render() {
@@ -109,27 +88,29 @@ public class Maze extends JFrame implements Runnable {
 
         g.setColor(Color.BLACK);
         g.fillRect(0,0 , WIDTH, HEIGHT);
-
         current.visited = true;
 
-        Cell next = checkNeighbors(current);
-        if(next != null)
-            current = next;
+        //TODO canMoveUp, down, left, right to check neighbors
 
-        g.setColor(new Color(100, 0, 100));
-        for(Cell c : cells)
-            if(c.visited) g.fillRect(c.x, c.y, w, w);
+        for(int i = 0; i < rows; i++){
+            for(int j = 0; j < cols; j++) {
+                if(grid[i][j].visited) {
+                    g.setColor(new Color(100, 0, 100));
+                    g.fillRect(grid[i][j].x, grid[i][j].y, w, w);
+                }
 
-        g.setColor(Color.WHITE);
-        for(Cell c : cells){
-            if(c.walls[0])
-                g.drawLine(c.x, c.y, c.x + w, c.y);
-            if(c.walls[1])
-                g.drawLine(c.x + w, c.y, c.x + w, c.y + w);
-            if(c.walls[2])
-                g.drawLine(c.x + w, c.y + w, c.x, c.y + w);
-            if(c.walls[3])
-                g.drawLine(c.x, c.y + w, c.x, c.y);
+                g.setColor(Color.WHITE);
+
+                if(grid[i][j].walls[0])
+                    g.drawLine(grid[i][j].x, grid[i][j].y, grid[i][j].x + w, grid[i][j].y);
+                if(grid[i][j].walls[1])
+                    g.drawLine(grid[i][j].x + w, grid[i][j].y, grid[i][j].x + w, grid[i][j].y + w);
+                if(grid[i][j].walls[2])
+                    g.drawLine(grid[i][j].x + w, grid[i][j].y + w, grid[i][j].x, grid[i][j].y + w);
+                if(grid[i][j].walls[3])
+                    g.drawLine(grid[i][j].x, grid[i][j].y + w, grid[i][j].x, grid[i][j].y);
+
+            }
         }
 
         g.dispose();
