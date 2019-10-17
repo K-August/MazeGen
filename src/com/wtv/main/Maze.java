@@ -6,17 +6,25 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferStrategy;
 import java.util.ArrayList;
+import java.util.Random;
+import java.util.Stack;
 
 public class Maze extends JFrame implements Runnable {
     private static final int WIDTH = 600, HEIGHT = 630;
+
+    private Random rand;
 
     private boolean running = false;
     private Thread thread;
 
     public int w = WIDTH / 10;
-    public int row = HEIGHT / w, col = WIDTH / w;
+    public int rows = HEIGHT / w, cols = WIDTH / w;
 
-    ArrayList<Cell> cells = new ArrayList<Cell>();
+
+    public Cell current;
+
+    public Stack<Cell> visited = new Stack<Cell>();
+    public Cell[][] grid = new Cell[rows][cols];
 
     public Maze() {
         super("maze");
@@ -28,11 +36,11 @@ public class Maze extends JFrame implements Runnable {
 
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-        for(int i = 0; i < row; i++) {
-            for(int j = 0; j < col; j++) {
-                cells.add(new Cell(i, j, w));
-            }
+        for(int i = 0; i < rows; i++) {
+            for(int j = 0; j < cols; j++) grid[i][j] = new Cell(j, i, w);
         }
+
+        current = grid[0][0];
 
         this.addWindowListener(new WindowAdapter() {
             @Override
@@ -60,20 +68,18 @@ public class Maze extends JFrame implements Runnable {
 
     private void tick() { }
 
-    private void renderComponent() {
-        render();
-    }
-
     public void run() {
+        long past = System.currentTimeMillis();
         while(running) {
+            long now = System.currentTimeMillis();
             tick();
-            renderComponent();
+            if(now - past > 100)
+                render();
         }
         stop();
     }
 
     public void render() {
-
         BufferStrategy bs = this.getBufferStrategy();
         if(bs == null) {
             this.createBufferStrategy(3);
@@ -85,17 +91,37 @@ public class Maze extends JFrame implements Runnable {
         g.setColor(Color.BLACK);
         g.fillRect(0,0 , WIDTH, HEIGHT);
 
-        g.setColor(Color.WHITE);
+        current.visited = true;
 
-        for(Cell c : cells){
-            g.drawLine(c.x, c.y, c.x + w, c.y);
-            g.drawLine(c.x + w, c.y, c.x + w, c.y + w);
-            g.drawLine(c.x + w, c.y + w, c.x, c.y + w);
-            g.drawLine(c.x, c.y + w, c.x, c.y);
+        //TODO canMoveUp, down, left, right to check neighbors
+
+        for(int i = 0; i < rows; i++){
+            for(int j = 0; j < cols; j++) {
+
+
+                if(current.visited) {
+                    g.setColor(Settings.a.getColor());
+                    g.fillRect(grid[i][j].x + (w / 4), grid[i][j].y, w / 2, w);
+                }
+
+                g.setColor(Color.BLUE);
+
+                if(grid[i][j].walls[0])
+                    g.drawLine(grid[i][j].x, grid[i][j].y, grid[i][j].x + w, grid[i][j].y);
+                if(grid[i][j].walls[1])
+                    g.drawLine(grid[i][j].x + w, grid[i][j].y, grid[i][j].x + w, grid[i][j].y + w);
+                if(grid[i][j].walls[2])
+                    g.drawLine(grid[i][j].x + w, grid[i][j].y + w, grid[i][j].x, grid[i][j].y + w);
+                if(grid[i][j].walls[3])
+                    g.drawLine(grid[i][j].x, grid[i][j].y + w, grid[i][j].x, grid[i][j].y);
+
+            }
         }
 
         g.dispose();
         bs.show();
+
     }
+
 
 }

@@ -75,8 +75,9 @@ public class Main extends JFrame implements Runnable {
         settings.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new Settings();
-                setVisible(false);
+                if (Settings.ins == null) Settings.ins = new Settings();
+                else Settings.ins.setVisible(true);
+                ins.setVisible(false);
             }
         });
         // endregion
@@ -114,7 +115,5 @@ public class Main extends JFrame implements Runnable {
         }
         stop();
     }
-    public static void main(String[] args) {
-        ins = new Main();
-    }
+    public static void main(String[] args) { ins = new Main(); }
 }
