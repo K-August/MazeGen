@@ -19,6 +19,7 @@ public class Maze extends JFrame implements Runnable {
     public static int rows = HEIGHT / w, cols = WIDTH / w;
 
     public boolean canMoveUp = true, canMoveRight = true, canMoveDown = true, canMoveLeft = true;
+    public boolean unvisited = true;
 
     public Cell current;
 
@@ -86,27 +87,40 @@ public class Maze extends JFrame implements Runnable {
         //TODO canMoveUp, down, left, right to check neighbors
 
         // region Maze Generation Algorithm
-        for(int i = 0; i < rows; i++){
-            for(int j = 0; j < cols; j++) {
-                if(grid[i][j].visited) {
-                    g.setColor(new Color(100, 0, 100));
-                    g.fillRect(grid[i][j].x, grid[i][j].y, w, w);
-                }
-
-                g.setColor(Color.WHITE);
-
-                if(grid[i][j].walls[0])
-                    g.drawLine(grid[i][j].x, grid[i][j].y, grid[i][j].x + w, grid[i][j].y);
-                if(grid[i][j].walls[1])
-                    g.drawLine(grid[i][j].x + w, grid[i][j].y, grid[i][j].x + w, grid[i][j].y + w);
-                if(grid[i][j].walls[2])
-                    g.drawLine(grid[i][j].x + w, grid[i][j].y + w, grid[i][j].x, grid[i][j].y + w);
-                if(grid[i][j].walls[3])
-                    g.drawLine(grid[i][j].x, grid[i][j].y + w, grid[i][j].x, grid[i][j].y);
-
+        int unvisitedCount = 0;
+        for(Cell[] idk : grid) {
+            for(Cell c : idk) {
+                if(!c.visited)
+                    unvisitedCount++;
+                if(unvisitedCount > 0)
+                    unvisited = true;
             }
         }
 
+        while(unvisited) {
+            for (int i = 0; i < rows; i++) {
+                for (int j = 0; j < cols; j++) {
+                    if (grid[i][j].visited) {
+                        g.setColor(new Color(100, 0, 100));
+                        g.fillRect(grid[i][j].x, grid[i][j].y, w, w);
+                    }
+
+                    Cell next = current.getNextCell(grid);
+
+                    g.setColor(Color.WHITE);
+
+                    if (grid[i][j].walls[0])
+                        g.drawLine(grid[i][j].x, grid[i][j].y, grid[i][j].x + w, grid[i][j].y);
+                    if (grid[i][j].walls[1])
+                        g.drawLine(grid[i][j].x + w, grid[i][j].y, grid[i][j].x + w, grid[i][j].y + w);
+                    if (grid[i][j].walls[2])
+                        g.drawLine(grid[i][j].x + w, grid[i][j].y + w, grid[i][j].x, grid[i][j].y + w);
+                    if (grid[i][j].walls[3])
+                        g.drawLine(grid[i][j].x, grid[i][j].y + w, grid[i][j].x, grid[i][j].y);
+
+                }
+            }
+        }
         g.dispose();
         bs.show();
         //endregion

@@ -20,9 +20,8 @@ public class Cell {
         y = (row * w) + 30;
     }
 
-    public void checkMoves() {
-        if(row - 1 < 0 || row + 1 > totalRows) {
-
-        }
+    public Cell getNextCell(Cell[][] grid) {
+        return null;
     }
+
 }
