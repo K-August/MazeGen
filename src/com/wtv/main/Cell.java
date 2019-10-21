@@ -37,29 +37,20 @@ public class Cell {
         }
     }
     public void destroyWalls(Cell nxt) {
-        if(this.x - nxt.x == 1) {
+        if(this.col - nxt.col == -1) {
             this.walls[1] = false;
             nxt.walls[3] = false;
-        }
-        if(this.x - nxt.x == -1) {
+        } else if(this.col - nxt.col == 1) {
             this.walls[3] = false;
             nxt.walls[1] = false;
-        }
-        if(this.y - nxt.y == 1) {
+        } else if(this.row - nxt.row == -1) {
             this.walls[2] = false;
             nxt.walls[0] = false;
-        }
-        if(this.y - nxt.y == -1) {
+        } else if(this.row - nxt.row == 1) {
             this.walls[0] = false;
             nxt.walls[2] = false;
         }
     }
-
-    public static int index(int i, int j, int cols) {
-        if(i < 0 || i > cols - 1 || j < 0 || j > cols - 1)
-            return 0;
-        else
-            return i + j * cols;
-    }
+   
 }
 
