@@ -36,7 +36,7 @@ public class Maze extends JFrame implements Runnable {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         for(int i = 0; i < rows; i++) {
-            for(int j = 0; j < cols; j++) grid[i][j] = new Cell(j, i, w);
+            for(int j = 0; j < cols; j++) grid[i][j] = new Cell(i, j, w);
         }
 
         current = grid[0][0];
