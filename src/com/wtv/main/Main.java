@@ -41,6 +41,7 @@ public class Main extends JFrame implements Runnable {
         start.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                ins.setVisible(false);
                 new Maze();
             }
         });
@@ -72,7 +73,7 @@ public class Main extends JFrame implements Runnable {
             @Override
             public void actionPerformed(ActionEvent e) {
                 new Settings();
-                setVisible(false);
+                ins.setVisible(false);
             }
         });
         // endregion
