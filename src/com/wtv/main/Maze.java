@@ -10,7 +10,7 @@ import java.util.Random;
 import java.util.Stack;
 
 public class Maze extends JFrame implements Runnable {
-    private static final int WIDTH = 600, HEIGHT = 630;
+    public static final int WIDTH = 600, HEIGHT = 630;
 
     private boolean running = false;
     private Thread thread;
@@ -24,6 +24,7 @@ public class Maze extends JFrame implements Runnable {
     public Stack<Cell> visited = new Stack<Cell>();
     public Cell[][] grid = new Cell[rows][cols];
 
+    // region Random Setup Garbo
     public Maze() {
         super("maze");
 
@@ -67,17 +68,44 @@ public class Maze extends JFrame implements Runnable {
     private void tick() { }
 
     public void run() {
-        long past = System.currentTimeMillis();
         while(running) {
-            long now = System.currentTimeMillis();
             tick();
-            if(now - past > 100)
+            try {
                 render();
+            } catch(InterruptedException e) {
+                e.printStackTrace();
+            }
         }
         stop();
     }
 
-    public void render() {
+    // endregion
+
+    private Cell checkCellNeighbors(Cell curr) {
+        ArrayList<Cell> neighbors = new ArrayList<Cell>();
+        Random rand = new Random();
+
+        // top
+        if(curr.row - 1 >= 0 && !grid[curr.row - 1][curr.col].visited)
+            neighbors.add(grid[curr.row - 1][curr.col]);
+        // right
+        if(curr.col + 1 < cols && !grid[curr.row][curr.col + 1].visited)
+            neighbors.add(grid[curr.row][curr.col + 1]);
+        // bottom
+        if(curr.row + 1 < rows && !grid[curr.row + 1][curr.col].visited)
+            neighbors.add(grid[curr.row + 1][curr.col]);
+        // left
+        if(curr.col - 1 >= 0 && !grid[curr.row][curr.col - 1].visited)
+            neighbors.add(grid[curr.row][curr.col - 1]);
+
+        // picking random neighbor
+        if(neighbors.size() > 0)
+            return neighbors.get(rand.nextInt(neighbors.size()));
+
+        return null;
+    }
+
+    public void render() throws InterruptedException {
         BufferStrategy bs = this.getBufferStrategy();
         if(bs == null) {
             this.createBufferStrategy(3);
@@ -88,7 +116,18 @@ public class Maze extends JFrame implements Runnable {
 
         g.setColor(Color.BLACK);
         g.fillRect(0,0 , WIDTH, HEIGHT);
+
+        // right & down work
+        // TODO fix picking Top & Left neighbor
         current.visited = true;
+        Cell next = this.checkCellNeighbors(current);
+        if(next != null) {
+            visited.push(current);
+            current = next;
+        }
+        else if(visited.size() > 0) {
+            current = visited.pop();
+        }
 
         //TODO canMoveUp, down, left, right to check neighbors
 
@@ -98,23 +137,20 @@ public class Maze extends JFrame implements Runnable {
                     g.setColor(new Color(100, 0, 100));
                     g.fillRect(grid[i][j].x, grid[i][j].y, w, w);
                 }
+                g.setColor(Color.BLUE);
+                g.fillRect(current.x, current.y, w, w);
 
-                g.setColor(Color.WHITE);
-
-                if(grid[i][j].walls[0])
-                    g.drawLine(grid[i][j].x, grid[i][j].y, grid[i][j].x + w, grid[i][j].y);
-                if(grid[i][j].walls[1])
-                    g.drawLine(grid[i][j].x + w, grid[i][j].y, grid[i][j].x + w, grid[i][j].y + w);
-                if(grid[i][j].walls[2])
-                    g.drawLine(grid[i][j].x + w, grid[i][j].y + w, grid[i][j].x, grid[i][j].y + w);
-                if(grid[i][j].walls[3])
-                    g.drawLine(grid[i][j].x, grid[i][j].y + w, grid[i][j].x, grid[i][j].y);
-
+                grid[i][j].drawWalls(g);
             }
         }
 
         g.dispose();
         bs.show();
+        try {
+            thread.sleep(250);
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }
