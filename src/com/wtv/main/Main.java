@@ -3,7 +3,6 @@ package com.wtv.main;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.image.BufferStrategy;
 
 public class Main extends JFrame implements Runnable {
     public static final int WIDTH = 600, HEIGHT = 800;

@@ -117,22 +117,17 @@ public class Maze extends JFrame implements Runnable {
         g.setColor(Color.BLACK);
         g.fillRect(0,0 , WIDTH, HEIGHT);
 
-        // right & down work
-        // TODO fix picking Top & Left neighbor
         current.visited = true;
         Cell next = this.checkCellNeighbors(current);
         if(next != null) {
+            current.destroyWalls(next);
             visited.push(current);
             current = next;
         }
         else if(visited.size() > 0) {
             current = visited.pop();
         }
-
-        System.out.println("[ " + current.row + " ] [ " + current.col + " ]");
-
-        //TODO canMoveUp, down, left, right to check neighbors
-
+        System.out.println("[ " + current.walls[0] + " ] [ " + current.walls[1] + " ] [ " + current.walls[2] + " ] [ " + current.walls[3] + " ]");
         for(int i = 0; i < rows; i++){
             for(int j = 0; j < cols; j++) {
                 if(grid[i][j].visited) {

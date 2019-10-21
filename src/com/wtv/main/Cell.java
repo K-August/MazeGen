@@ -4,7 +4,7 @@ import java.awt.*;
 
 public class Cell {
     public boolean visited = false;
-    public boolean[] walls = {true, true, true, true};
+    public boolean[] walls;
 
     public int x, y, row, col;
 
@@ -13,6 +13,8 @@ public class Cell {
     // i = rows j = columns
 
     public Cell(int row, int col, int w) {
+        walls = new boolean[] {true, true, true, true};
+
         this.row = row;
         this.col = col;
         x = col * w;
@@ -32,6 +34,24 @@ public class Cell {
         }
         if(this.walls[3]){
             g.drawLine(x, y + w, x, y);
+        }
+    }
+    public void destroyWalls(Cell nxt) {
+        if(this.x - nxt.x == 1) {
+            this.walls[1] = false;
+            nxt.walls[3] = false;
+        }
+        if(this.x - nxt.x == -1) {
+            this.walls[3] = false;
+            nxt.walls[1] = false;
+        }
+        if(this.y - nxt.y == 1) {
+            this.walls[2] = false;
+            nxt.walls[0] = false;
+        }
+        if(this.y - nxt.y == -1) {
+            this.walls[0] = false;
+            nxt.walls[2] = false;
         }
     }
 
