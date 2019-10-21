@@ -129,6 +129,8 @@ public class Maze extends JFrame implements Runnable {
             current = visited.pop();
         }
 
+        System.out.println("[ " + current.row + " ] [ " + current.col + " ]");
+
         //TODO canMoveUp, down, left, right to check neighbors
 
         for(int i = 0; i < rows; i++){
