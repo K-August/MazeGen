@@ -9,7 +9,6 @@ import java.awt.event.WindowEvent;
 
 public class Settings extends JFrame
 {
-    public static Settings ins;
     
     public static JColorChooser a = new JColorChooser();
     public static JColorChooser b = new JColorChooser();
@@ -35,14 +34,13 @@ public class Settings extends JFrame
         
         add(a);
         add(b);
-
         // endregion
 
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
                 super.windowClosing(e);
-                new Main();
+                Main.ins.setVisible(true);
             }
         });
 
