@@ -2,11 +2,7 @@ package com.wtv.main;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.image.BufferStrategy;
+import java.awt.event.*;
 
 public class Main extends JFrame implements Runnable {
     public static final int WIDTH = 1920, HEIGHT = 1080;
@@ -44,8 +40,8 @@ public class Main extends JFrame implements Runnable {
         start.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                ins.setVisible(false);
                 new Maze();
-                setVisible(false);
             }
         });
         //endregion
@@ -75,8 +71,7 @@ public class Main extends JFrame implements Runnable {
         settings.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (Settings.ins == null) Settings.ins = new Settings();
-                else Settings.ins.setVisible(true);
+                new Settings();
                 ins.setVisible(false);
             }
         });
@@ -115,5 +110,7 @@ public class Main extends JFrame implements Runnable {
         }
         stop();
     }
-    public static void main(String[] args) { ins = new Main(); }
+    public static void main(String[] args) {
+        ins = new Main();
+    }
 }
