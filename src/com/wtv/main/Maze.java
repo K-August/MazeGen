@@ -127,7 +127,7 @@ public class Maze extends JFrame implements Runnable {
         else if(visited.size() > 0) {
             current = visited.pop();
         }
-        System.out.println("[ " + current.walls[0] + " ] [ " + current.walls[1] + " ] [ " + current.walls[2] + " ] [ " + current.walls[3] + " ]");
+
         for(int i = 0; i < rows; i++){
             for(int j = 0; j < cols; j++) {
                 if(grid[i][j].visited) {
