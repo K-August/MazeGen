@@ -9,10 +9,10 @@ import java.awt.event.WindowEvent;
 
 public class Settings extends JFrame
 {
-    private Color first, second; 
+    public static Settings ins;
     
-    JColorChooser a = new JColorChooser();
-    JColorChooser b = new JColorChooser();
+    public static JColorChooser a = new JColorChooser();
+    public static JColorChooser b = new JColorChooser();
     
     public Settings()
     {
@@ -35,24 +35,7 @@ public class Settings extends JFrame
         
         add(a);
         add(b);
-        
-        a.getSelectionModel().addChangeListener(new ChangeListener()
-        {
-            @Override
-            public void stateChanged(ChangeEvent changeEvent)
-            {
-                 first = a.getColor();
-                 Main.ins.start.setBackground(first);
-            }
-        });
-        b.getSelectionModel().addChangeListener(new ChangeListener()
-        {
-            @Override
-            public void stateChanged(ChangeEvent changeEvent)
-            {
-                second = a.getColor();
-            }
-        });
+
         // endregion
 
         this.addWindowListener(new WindowAdapter() {
