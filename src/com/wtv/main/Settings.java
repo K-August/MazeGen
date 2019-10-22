@@ -4,14 +4,18 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 public class Settings extends JFrame
 {
-    
+    public static boolean isEpic;
+    public static Settings ins;
     public static JColorChooser a = new JColorChooser();
-    public static JColorChooser b = new JColorChooser();
+    
+    private JButton button = new JButton("Epic Mode");
     
     public Settings()
     {
@@ -27,13 +31,23 @@ public class Settings extends JFrame
         
         // region Color Choosers
         a.setSize(400, 200);
-        b.setSize(400, 200);
+        button.setSize(150, 150);
         
         a.setLocation(100, 100);
-        b.setLocation(100, 300);
-        
+        button.setLocation(Main.WIDTH / 2, Main.HEIGHT / 2);
+
+        button.setBackground(Color.GREEN);
+        button.setForeground(Color.BLACK);
+
         add(a);
-        add(b);
+        add(button);
+
+        button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                isEpic = !isEpic;
+            }
+        });
         // endregion
 
         this.addWindowListener(new WindowAdapter() {

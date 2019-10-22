@@ -5,7 +5,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class Main extends JFrame implements Runnable {
-    public static final int WIDTH = 1920, HEIGHT = 1080;
+    public static final int WIDTH = 600, HEIGHT = 800;
 
     public static Main ins;
 

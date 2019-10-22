@@ -131,7 +131,11 @@ public class Maze extends JFrame implements Runnable {
         for(int i = 0; i < rows; i++){
             for(int j = 0; j < cols; j++) {
                 if(grid[i][j].visited) {
-                    g.setColor(new Color(100, 0, 100));
+                    if (Settings.isEpic)
+                        g.setColor(Color.getHSBColor((float)Math.random(), (float)Math.random(), (float)Math.random()));
+                    else
+                        g.setColor(Settings.a.getColor());
+
                     g.fillRect(grid[i][j].x, grid[i][j].y, w, w);
                 }
                 g.setColor(Color.BLUE);
